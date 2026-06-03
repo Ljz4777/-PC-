@@ -1,4 +1,4 @@
-﻿package com.synpharm.utils;
+﻿﻿package com.synpharm.utils;
 
 import org.springframework.stereotype.Component;
 
