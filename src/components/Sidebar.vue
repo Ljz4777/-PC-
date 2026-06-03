@@ -3,7 +3,7 @@
     <div class="sidebar__brand">
       <div class="sidebar__logo">
         <span class="sidebar__logo-icon">🧬</span>
-        <span class="sidebar__logo-text">智互药研</span>
+        <span class="sidebar__logo-text">SynPharm</span>
       </div>
     </div>
     

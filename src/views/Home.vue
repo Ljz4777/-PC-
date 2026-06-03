@@ -4,7 +4,7 @@
       <div class="home__header-content">
         <div class="home__logo">
           <span class="home__logo-icon">🧬</span>
-          <span class="home__logo-text">智互药研</span>
+          <span class="home__logo-text">SynPharm</span>
         </div>
         <nav class="home__nav">
           <a href="#features" class="home__nav-link">核心功能</a>
@@ -189,7 +189,7 @@
           <a href="#architecture" class="home__footer-link">技术架构</a>
           <a href="#demo" class="home__footer-link">在线演示</a>
         </div>
-        <span class="home__footer-copyright">© 2024 智互药研</span>
+        <span class="home__footer-copyright">© 2024 SynPharm</span>
       </div>
     </footer>
   </div>

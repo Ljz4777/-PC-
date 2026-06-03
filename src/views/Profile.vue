@@ -3,25 +3,21 @@
     <Sidebar />
     <main class="profile__content">
       <header class="profile__header">
-        <div>
-          <h1 class="profile__title">个人中心</h1>
-          <p class="profile__subtitle">管理您的账户和偏好设置</p>
-        </div>
-      </header>
-      
-      <section class="profile__main">
-        <div class="profile__card profile__card--info">
+        <div class="profile__header-bg"></div>
+        <div class="profile__header-content">
           <div class="profile__avatar">
             <span class="profile__avatar-text">{{ avatarText }}</span>
           </div>
           <div class="profile__user-info">
-            <span class="profile__user-name">{{ authStore.userNickname }}</span>
-            <span class="profile__user-email">{{ authStore.user?.email }}</span>
+            <h1 class="profile__user-name">{{ authStore.userNickname }}</h1>
+            <p class="profile__user-email">{{ authStore.user?.email }}</p>
             <span class="profile__user-role">{{ authStore.isGuest ? '游客账号' : '已认证用户' }}</span>
           </div>
           <button class="profile__edit-btn" @click="editProfile">编辑资料</button>
         </div>
-        
+      </header>
+      
+      <section class="profile__main">
         <div class="profile__card">
           <h3 class="profile__card-title">账户安全</h3>
           <div class="profile__card-content">
@@ -52,18 +48,22 @@
           <h3 class="profile__card-title">使用统计</h3>
           <div class="profile__card-content profile__stats">
             <div class="profile__stat-item">
+              <span class="profile__stat-icon">📋</span>
               <span class="profile__stat-value">{{ stats.totalTasks }}</span>
               <span class="profile__stat-label">总任务数</span>
             </div>
             <div class="profile__stat-item">
+              <span class="profile__stat-icon">✅</span>
               <span class="profile__stat-value">{{ stats.completedTasks }}</span>
               <span class="profile__stat-label">已完成</span>
             </div>
             <div class="profile__stat-item">
+              <span class="profile__stat-icon">📊</span>
               <span class="profile__stat-value">{{ stats.totalResults }}</span>
               <span class="profile__stat-label">预测结果</span>
             </div>
             <div class="profile__stat-item">
+              <span class="profile__stat-icon">💾</span>
               <span class="profile__stat-value">{{ stats.storageUsed }}</span>
               <span class="profile__stat-label">存储空间</span>
             </div>
@@ -78,21 +78,30 @@
                 <span class="profile__card-icon">🌙</span>
                 <span class="profile__card-text">深色模式</span>
               </div>
-              <input v-model="darkMode" type="checkbox" class="profile__toggle" />
+              <div class="profile__toggle-wrapper">
+                <input v-model="darkMode" type="checkbox" class="profile__toggle" />
+                <span class="profile__toggle-bg"></span>
+              </div>
             </div>
             <div class="profile__card-item profile__card-item--toggle">
               <div>
                 <span class="profile__card-icon">🔔</span>
                 <span class="profile__card-text">邮件通知</span>
               </div>
-              <input v-model="notifications" type="checkbox" class="profile__toggle" />
+              <div class="profile__toggle-wrapper">
+                <input v-model="notifications" type="checkbox" class="profile__toggle" />
+                <span class="profile__toggle-bg"></span>
+              </div>
             </div>
             <div class="profile__card-item profile__card-item--toggle">
               <div>
                 <span class="profile__card-icon">📊</span>
                 <span class="profile__card-text">数据追踪</span>
               </div>
-              <input v-model="dataTracking" type="checkbox" class="profile__toggle" />
+              <div class="profile__toggle-wrapper">
+                <input v-model="dataTracking" type="checkbox" class="profile__toggle" />
+                <span class="profile__toggle-bg"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -145,68 +154,66 @@ const handleDeleteAccount = () => {
 .profile {
   display: flex;
   min-height: 100vh;
-  background: $bg-secondary;
+  background: #f8fafc;
 }
 
 .profile__content {
   flex: 1;
   margin-left: $sidebar-width;
-  padding: $spacing-lg;
+  min-height: 100vh;
 }
 
 .profile__header {
-  margin-bottom: $spacing-xl;
+  position: relative;
+  padding: $spacing-xl;
+  overflow: hidden;
+  background: linear-gradient(135deg, $info-color 0%, $primary-color 100%);
 }
 
-.profile__title {
-  font-size: 24px;
-  font-weight: 600;
-  color: $text-primary;
-  margin-bottom: $spacing-xs;
+.profile__header-bg {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: headerGlow 12s ease-in-out infinite;
 }
 
-.profile__subtitle {
-  font-size: $font-size-sm;
-  color: $text-muted;
+@keyframes headerGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
 }
 
-.profile__main {
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-}
-
-.profile__card {
-  background: $bg-primary;
-  border-radius: $border-radius-lg;
-  padding: $spacing-lg;
-  border: 1px solid $border-light;
-}
-
-.profile__card--info {
+.profile__header-content {
+  position: relative;
   display: flex;
   align-items: center;
   gap: $spacing-lg;
-}
-
-.profile__card--danger {
-  border-color: rgba($error-color, 0.2);
+  max-width: 1000px;
 }
 
 .profile__avatar {
-  width: 80px;
-  height: 80px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  transition: all $transition-normal;
+  
+  &:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
 }
 
 .profile__avatar-text {
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 700;
   color: #ffffff;
 }
 
@@ -214,38 +221,73 @@ const handleDeleteAccount = () => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: $spacing-xs;
 }
 
 .profile__user-name {
-  font-size: $font-size-xl;
-  font-weight: 600;
-  color: $text-primary;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
 }
 
 .profile__user-email {
-  font-size: $font-size-sm;
-  color: $text-secondary;
+  font-size: $font-size-base;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
 }
 
 .profile__user-role {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: $border-radius-lg;
   font-size: $font-size-xs;
-  color: $text-muted;
+  color: rgba(255, 255, 255, 0.9);
+  width: fit-content;
 }
 
 .profile__edit-btn {
   padding: $spacing-sm $spacing-lg;
-  background: transparent;
-  border: 1px solid $border-color;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: $border-radius-md;
   font-size: $font-size-sm;
-  color: $text-secondary;
+  color: #ffffff;
   cursor: pointer;
   transition: all $transition-fast;
   
   &:hover {
-    background: $bg-secondary;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
+}
+
+.profile__main {
+  max-width: 1000px;
+  padding: $spacing-xl;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $spacing-lg;
+}
+
+.profile__card {
+  background: #ffffff;
+  border-radius: $border-radius-xl;
+  padding: $spacing-xl;
+  border: 1px solid $border-color;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.04),
+    0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.profile__card--danger {
+  grid-column: 1 / -1;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.02);
 }
 
 .profile__card-title {
@@ -266,21 +308,27 @@ const handleDeleteAccount = () => {
   align-items: center;
   gap: $spacing-md;
   padding: $spacing-md;
-  border-radius: $border-radius-md;
+  border-radius: $border-radius-lg;
   cursor: pointer;
   transition: all $transition-fast;
   
   &:hover {
-    background: $bg-secondary;
+    background: $bg-tertiary;
+    transform: translateX(4px);
   }
   
   &--toggle {
     justify-content: space-between;
+    transform: none;
+    
+    &:hover {
+      transform: none;
+    }
   }
 }
 
 .profile__card-icon {
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
 }
 
 .profile__card-text {
@@ -296,21 +344,39 @@ const handleDeleteAccount = () => {
 
 .profile__stats {
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: $spacing-md;
 }
 
 .profile__stat-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: $spacing-md;
+  gap: $spacing-xs;
+  padding: $spacing-lg;
+  background: $bg-tertiary;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-lg;
+  transition: all $transition-fast;
+  
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(59, 130, 246, 0.08);
+    border-color: $accent-color;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.profile__stat-icon {
+  font-size: 32px;
+  margin-bottom: $spacing-xs;
 }
 
 .profile__stat-value {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
-  color: $primary-color;
+  color: $text-primary;
 }
 
 .profile__stat-label {
@@ -318,34 +384,41 @@ const handleDeleteAccount = () => {
   color: $text-muted;
 }
 
+.profile__toggle-wrapper {
+  position: relative;
+  width: 52px;
+  height: 30px;
+}
+
 .profile__toggle {
-  width: 40px;
-  height: 24px;
-  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
   background: $border-color;
   appearance: none;
   cursor: pointer;
   position: relative;
-  transition: background $transition-fast;
+  transition: all $transition-fast;
   
   &:checked {
-    background: $primary-color;
-    
-    &::after {
-      left: 22px;
-    }
+    background: linear-gradient(135deg, $accent-color 0%, #2563eb 100%);
   }
   
   &::after {
     content: '';
     position: absolute;
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     background: #ffffff;
     border-radius: 50%;
     top: 3px;
     left: 3px;
     transition: left $transition-fast;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:checked::after {
+    left: 25px;
   }
 }
 
@@ -353,15 +426,18 @@ const handleDeleteAccount = () => {
   width: 100%;
   padding: $spacing-md;
   background: transparent;
-  border: 1px solid rgba($error-color, 0.3);
-  border-radius: $border-radius-md;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: $border-radius-lg;
   font-size: $font-size-sm;
+  font-weight: 500;
   color: $error-color;
   cursor: pointer;
   transition: all $transition-fast;
   
   &:hover {
-    background: rgba($error-color, 0.1);
+    background: rgba(239, 68, 68, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.1);
   }
 }
 </style>

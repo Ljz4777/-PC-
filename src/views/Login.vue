@@ -3,12 +3,12 @@
     <div class="login__left">
       <div class="login__logo">
         <span class="login__logo-icon">🧬</span>
-        <span class="login__logo-text">智互药研</span>
+        <span class="login__logo-text">SynPharm</span>
       </div>
-      <div class="login__hero">
-        <h1 class="login__hero-title">智能药物研发平台</h1>
-        <p class="login__hero-desc">基于多智能体协同技术，精准预测分子互作</p>
-      </div>
+      
+      <h2 class="login__title">智能药物研发平台</h2>
+      <p class="login__desc">基于多智能体协同技术，精准预测分子互作</p>
+      
       <div class="login__features">
         <div class="login__feature">
           <span class="login__feature-icon">🔬</span>
@@ -26,70 +26,79 @@
     </div>
     
     <div class="login__right">
-      <div class="login__card">
+      <div class="login__form-container">
         <router-link to="/" class="login__back-link">
           ← 返回首页
         </router-link>
-        <h2 class="login__card-title">欢迎回来</h2>
-        <p class="login__card-subtitle">登录您的账户</p>
+        
+        <h3 class="login__form-title">欢迎回来</h3>
         
         <form @submit.prevent="handleLogin" class="login__form">
           <div class="login__form-group">
-            <label class="login__label">邮箱</label>
-            <input 
-              v-model="email"
-              type="email" 
-              class="login__input"
-              placeholder="请输入邮箱"
-              required
-            />
+            <label class="login__form-label">邮箱</label>
+            <div class="login__input-wrapper">
+              <span class="login__input-icon">📧</span>
+              <input 
+                v-model="email"
+                type="email" 
+                class="login__form-input"
+                placeholder="请输入邮箱"
+                required
+              />
+            </div>
           </div>
           
           <div class="login__form-group">
-            <label class="login__label">密码</label>
-            <input 
-              v-model="password"
-              type="password" 
-              class="login__input"
-              placeholder="请输入密码"
-              required
-            />
+            <label class="login__form-label">密码</label>
+            <div class="login__input-wrapper">
+              <span class="login__input-icon">🔒</span>
+              <input 
+                v-model="password"
+                type="password" 
+                class="login__form-input"
+                placeholder="请输入密码"
+                required
+              />
+            </div>
           </div>
           
           <div class="login__form-group login__form-group--remember">
-            <input 
-              v-model="rememberMe"
-              type="checkbox" 
-              id="remember"
-              class="login__checkbox"
-            />
-            <label for="remember" class="login__remember-label">记住我</label>
-            <a href="#" class="login__forgot-link">忘记密码?</a>
+            <label class="login__form-checkbox">
+              <input 
+                v-model="rememberMe"
+                type="checkbox" 
+                class="login__checkbox"
+              />
+              <span class="login__checkbox-checkmark"></span>
+              <span>记住我</span>
+            </label>
+            <a href="#" class="login__form-link">忘记密码?</a>
           </div>
           
           <button 
             type="submit" 
-            class="login__btn login__btn--primary"
+            class="login__form-btn"
             :disabled="isLoading"
           >
+            <span v-if="isLoading" class="login__btn-spinner"></span>
             {{ isLoading ? '登录中...' : '登录' }}
+          </button>
+          
+          <div class="login__divider">
+            <span class="login__divider-text">或</span>
+          </div>
+          
+          <button 
+            class="login__form-btn login__form-btn--outline"
+            @click="handleGuestLogin"
+          >
+            游客模式
           </button>
         </form>
         
-        <div class="login__divider">
-          <span class="login__divider-text">或</span>
-        </div>
-        
-        <button 
-          class="login__btn login__btn--outline"
-          @click="handleGuestLogin"
-        >
-          游客模式
-        </button>
-        
-        <p class="login__register">
+        <p class="login__form-footer">
           还没有账户? 
-          <router-link to="/register" class="login__register-link">立即注册</router-link>
+          <router-link to="/register" class="login__form-link">立即注册</router-link>
         </p>
       </div>
     </div>
@@ -138,13 +147,14 @@ const handleGuestLogin = () => {
 
 <style lang="scss" scoped>
 .login {
-  display: flex;
   min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
 }
 
 .login__left {
-  flex: 1;
-  background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+  width: 50%;
+  background: linear-gradient(135deg, $info-color 0%, $primary-color 100%);
   padding: $spacing-2xl;
   display: flex;
   flex-direction: column;
@@ -155,48 +165,57 @@ const handleGuestLogin = () => {
 .login__logo {
   display: flex;
   align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-2xl;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-xl;
 }
 
 .login__logo-icon {
-  font-size: 32px;
+  font-size: 48px;
 }
 
 .login__logo-text {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
 }
 
-.login__hero {
-  margin-bottom: $spacing-2xl;
-}
-
-.login__hero-title {
-  font-size: 40px;
+.login__title {
+  font-size: 42px;
   font-weight: 700;
   margin-bottom: $spacing-md;
-  line-height: 1.2;
 }
 
-.login__hero-desc {
+.login__desc {
   font-size: $font-size-lg;
-  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: $spacing-xl;
+  max-width: 450px;
 }
 
 .login__features {
   display: flex;
-  gap: $spacing-xl;
+  flex-wrap: wrap;
+  gap: $spacing-lg;
 }
 
 .login__feature {
   display: flex;
   align-items: center;
   gap: $spacing-sm;
+  padding: $spacing-md;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $border-radius-lg;
+  backdrop-filter: blur(10px);
+  transition: all $transition-normal;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
 }
 
 .login__feature-icon {
-  font-size: 20px;
+  font-size: 28px;
 }
 
 .login__feature-text {
@@ -204,21 +223,22 @@ const handleGuestLogin = () => {
 }
 
 .login__right {
-  flex: 1;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-2xl;
-  background: $bg-secondary;
+  padding: $spacing-xl;
 }
 
-.login__card {
+.login__form-container {
   width: 100%;
-  max-width: 400px;
-  background: $bg-primary;
-  border-radius: $border-radius-xl;
+  max-width: 450px;
+  background: #ffffff;
   padding: $spacing-2xl;
-  box-shadow: $shadow-lg;
+  border-radius: $border-radius-2xl;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.04);
 }
 
 .login__back-link {
@@ -227,25 +247,20 @@ const handleGuestLogin = () => {
   color: $text-secondary;
   text-decoration: none;
   margin-bottom: $spacing-lg;
-  transition: color $transition-fast;
+  transition: all $transition-fast;
   
   &:hover {
-    color: $primary-color;
+    color: $accent-color;
     text-decoration: underline;
   }
 }
 
-.login__card-title {
-  font-size: 24px;
-  font-weight: 600;
+.login__form-title {
+  font-size: 28px;
+  font-weight: 700;
   color: $text-primary;
-  margin-bottom: $spacing-xs;
-}
-
-.login__card-subtitle {
-  font-size: $font-size-sm;
-  color: $text-muted;
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  text-align: center;
 }
 
 .login__form {
@@ -266,69 +281,127 @@ const handleGuestLogin = () => {
   justify-content: space-between;
 }
 
-.login__label {
+.login__form-label {
   font-size: $font-size-sm;
   font-weight: 500;
   color: $text-primary;
 }
 
-.login__input {
-  padding: $spacing-md;
+.login__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login__input-icon {
+  position: absolute;
+  left: $spacing-md;
+  font-size: 18px;
+  color: $text-muted;
+}
+
+.login__form-input {
+  width: 100%;
+  padding: $spacing-md $spacing-md $spacing-md calc(#{$spacing-md} + 40px);
+  background: $bg-tertiary;
   border: 1px solid $border-color;
-  border-radius: $border-radius-md;
+  border-radius: $border-radius-lg;
   font-size: $font-size-base;
-  background: $bg-secondary;
-  transition: border-color $transition-fast;
+  color: $text-primary;
+  transition: all $transition-fast;
+  
+  &::placeholder {
+    color: $text-muted;
+  }
   
   &:focus {
     outline: none;
-    border-color: $primary-color;
+    border-color: $accent-color;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
 }
 
-.login__checkbox {
-  width: 18px;
-  height: 18px;
-  border-radius: $border-radius-sm;
-}
-
-.login__remember-label {
+.login__form-checkbox {
   font-size: $font-size-sm;
   color: $text-secondary;
-  margin-left: $spacing-xs;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
 }
 
-.login__forgot-link {
-  font-size: $font-size-sm;
-  color: $primary-color;
+.login__checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.login__checkbox-checkmark {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid $border-color;
+  border-radius: $border-radius-sm;
+  position: relative;
+  transition: all $transition-fast;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid $accent-color;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity $transition-fast;
+  }
+}
+
+.login__checkbox:checked + .login__checkbox-checkmark {
+  background: $accent-color;
+  border-color: $accent-color;
+  
+  &::after {
+    opacity: 1;
+  }
+}
+
+.login__form-link {
+  color: $accent-color;
   text-decoration: none;
+  font-size: $font-size-sm;
   
   &:hover {
     text-decoration: underline;
   }
 }
 
-.login__btn {
+.login__form-btn {
   padding: $spacing-md;
-  border-radius: $border-radius-md;
+  background: linear-gradient(135deg, $accent-color 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: $border-radius-lg;
   font-size: $font-size-base;
   font-weight: 500;
   cursor: pointer;
-  border: none;
   transition: all $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
   
-  &--primary {
-    background: $primary-color;
-    color: #ffffff;
-    
-    &:hover:not(:disabled) {
-      background: $primary-dark;
-    }
-    
-    &:disabled {
-      background: $border-color;
-      cursor: not-allowed;
-    }
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+  }
+  
+  &:disabled {
+    background: $border-color;
+    cursor: not-allowed;
   }
   
   &--outline {
@@ -337,9 +410,25 @@ const handleGuestLogin = () => {
     border: 1px solid $border-color;
     
     &:hover {
-      background: $bg-secondary;
+      background: $bg-tertiary;
+      border-color: $accent-color;
+      transform: none;
+      box-shadow: none;
     }
   }
+}
+
+.login__btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .login__divider {
@@ -362,20 +451,11 @@ const handleGuestLogin = () => {
   color: $text-muted;
 }
 
-.login__register {
+.login__form-footer {
   text-align: center;
   font-size: $font-size-sm;
   color: $text-secondary;
   margin-top: $spacing-lg;
 }
-
-.login__register-link {
-  color: $primary-color;
-  font-weight: 500;
-  text-decoration: none;
-  
-  &:hover {
-    text-decoration: underline;
-  }
-}
 </style>
+

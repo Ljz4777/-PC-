@@ -3,7 +3,7 @@
     <div class="register__left">
       <div class="register__logo">
         <span class="register__logo-icon">🧬</span>
-        <span class="register__logo-text">智互药研</span>
+        <span class="register__logo-text">SynPharm</span>
       </div>
       <h2 class="register__title">创建您的账号</h2>
       <p class="register__desc">加入我们，开启智能药物研发之旅</p>

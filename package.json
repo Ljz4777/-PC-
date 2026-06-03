@@ -1,7 +1,7 @@
 {
-  "name": "zhi-hu-yao-yan-pc",
+  "name": "synpharm-pc",
   "version": "1.0.0",
-  "description": "智互药研 - PC端药物研发预测平台",
+  "description": "SynPharm - PC端药物研发预测平台",
   "type": "module",
   "scripts": {
     "dev": "vite",
